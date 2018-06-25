@@ -6,6 +6,7 @@ import {
   Platform,
   Image,
   Text as NativeText,
+  TouchableOpacity,
 } from 'react-native';
 import fonts from '../config/fonts';
 import colors from '../config/colors';
@@ -34,6 +35,7 @@ const Card = props => {
     imageStyle,
     fontFamily,
     imageProps,
+    onImagePress,
     ...attributes
   } = props;
 
@@ -78,36 +80,38 @@ const Card = props => {
             )}
         {image && (
           <View style={imageWrapperStyle && imageWrapperStyle}>
-            <BackgroundImage
-              style={[{ width: null, height: 150 }, imageStyle && imageStyle]}
-              source={image}
-              {...imageProps}
-            >
-              {(featuredTitle || featuredSubtitle) && (
-                <View style={styles.overlayContainer}>
-                  {featuredTitle && (
-                    <Text
-                      style={[
-                        styles.featuredTitle,
-                        featuredTitleStyle && featuredTitleStyle,
-                      ]}
-                    >
-                      {featuredTitle}
-                    </Text>
-                  )}
-                  {featuredSubtitle && (
-                    <Text
-                      style={[
-                        styles.featuredSubtitle,
-                        featuredSubtitleStyle && featuredSubtitleStyle,
-                      ]}
-                    >
-                      {featuredSubtitle}
-                    </Text>
-                  )}
-                </View>
-              )}
-            </BackgroundImage>
+            <TouchableOpacity onPress={onImagePress} >
+              <BackgroundImage
+                style={[{ width: null, height: 150 }, imageStyle && imageStyle]}
+                source={image}
+                {...imageProps}
+              >
+                {(featuredTitle || featuredSubtitle) && (
+                  <View style={styles.overlayContainer}>
+                    {featuredTitle && (
+                      <Text
+                        style={[
+                          styles.featuredTitle,
+                          featuredTitleStyle && featuredTitleStyle,
+                        ]}
+                      >
+                        {featuredTitle}
+                      </Text>
+                    )}
+                    {featuredSubtitle && (
+                      <Text
+                        style={[
+                          styles.featuredSubtitle,
+                          featuredSubtitleStyle && featuredSubtitleStyle,
+                        ]}
+                      >
+                        {featuredSubtitle}
+                      </Text>
+                    )}
+                  </View>
+                )}
+              </BackgroundImage>
+            </TouchableOpacity>
             <View style={[{ padding: 10 }, wrapperStyle && wrapperStyle]}>
               {children}
             </View>
@@ -138,6 +142,7 @@ Card.propTypes = {
   fontFamily: PropTypes.string,
   imageProps: PropTypes.object,
   titleNumberOfLines: PropTypes.number,
+  onImagePress: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
